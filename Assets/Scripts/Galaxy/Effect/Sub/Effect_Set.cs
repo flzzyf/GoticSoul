@@ -4,6 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "Effect/Set")]
 public class Effect_Set : Effect {
+	[HideInInspector]
 	public List<Effect> effectList;
 
 	public override void Trigger() {

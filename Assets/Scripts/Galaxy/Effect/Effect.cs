@@ -6,9 +6,13 @@ public enum TargetType { Point, Unit, UnitOrPoint }
 public enum WhichUnit { Target, Caster, Origin}
 
 public class Effect : ScriptableObject{
+	[HideInInspector]
 	public Unit originUnit;
+	[HideInInspector]
 	public Unit casterUnit;
+	[HideInInspector]
 	public Unit targetUnit;
+	[HideInInspector]
 	public Vector2 targetPoint;
 
 	#region 触发效果

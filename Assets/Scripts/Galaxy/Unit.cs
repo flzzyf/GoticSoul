@@ -5,10 +5,10 @@ using System;
 
 //单位标旗
 public enum UnitFlag {
-	//可移动
-	Movable,
-	//可控制
-	Controllable,
+	//不可移动
+	Unmovable,
+	//不可控制
+	Uncontrollable,
 	//无敌
 	Invincible,
 }
@@ -26,6 +26,7 @@ public class Unit : MonoBehaviour{
 	//单位所属玩家
 	public int player;
 
+	//单位位置
 	public Vector2 pos {
 		get {
 			return transform.position;
@@ -65,7 +66,7 @@ public class Unit : MonoBehaviour{
 	//向目标角度移动
 	public void Move(int dir, bool faceTargetDir = true) {
 		//如果无法移动
-		if (!HasFlag(UnitFlag.Movable) || !HasFlag(UnitFlag.Controllable)) {
+		if (HasFlag(UnitFlag.Unmovable)) {
 			return;
 		}
 
@@ -108,34 +109,11 @@ public class Unit : MonoBehaviour{
 
 	#endregion
 
-	#region 翻滚
-
-	//向前翻滚
-	public void Roll() {
-		actor.PlayAnim(UnitAnim.Roll);
-
-		StartCoroutine(RollCor());
-	}
-
-	IEnumerator RollCor() {
-		float rollDuration = .4f;
-		float rollDistance = 5f;
-		float rollSpeed = rollDistance / rollDuration;
-
-		SetFlag(UnitFlag.Controllable, false);
-
-		for (float i = 0; i < rollDuration; i += Time.fixedDeltaTime) {
-			rb.movingForce = Vector2.right * facing * rollSpeed;
-
-			yield return new WaitForFixedUpdate();
-		}
-
-		SetFlag(UnitFlag.Controllable, true);
-	}
+	#region 狼剑术
 
 	public void WolfSword() {
 		//设为不可控制
-		SetFlag(UnitFlag.Controllable, false);
+		SetFlag(UnitFlag.Uncontrollable, false);
 
 		StartCoroutine(WolfSwordCor());
 
@@ -153,7 +131,7 @@ public class Unit : MonoBehaviour{
 			},
 			() => {
 				//解除不可控制
-				SetFlag(UnitFlag.Controllable, true);
+				SetFlag(UnitFlag.Uncontrollable, true);
 			});
 	}
 
@@ -169,7 +147,6 @@ public class Unit : MonoBehaviour{
 
 			yield return new WaitForFixedUpdate();
 		}
-
 	}
 
 	#endregion
@@ -204,17 +181,18 @@ public class Unit : MonoBehaviour{
 		foreach (UnitFlag flag in Enum.GetValues(typeof(UnitFlag))) {
 			flagValueDic.Add(flag, 0);
 		}
-
-		SetFlag(UnitFlag.Movable, true);
-		SetFlag(UnitFlag.Controllable, true);
 	}
 
+	//设置标旗
 	public void SetFlag(UnitFlag flag, bool value) {
+		//Debug.Log(string.Format("{0}标旗：{1}", value ? "添加" : "移除", flag.ToString()));
+		
 		int modiify = value ? 1 : -1;
 
 		flagValueDic[flag] += modiify;
 	}
 
+	//具有标旗
 	public bool HasFlag(UnitFlag flag) {
 		return flagValueDic[flag] > 0;
 	}
@@ -253,7 +231,7 @@ public class Unit : MonoBehaviour{
 		StopMoving();
 
 		//设为不可控制
-		SetFlag(UnitFlag.Controllable, false);
+		SetFlag(UnitFlag.Uncontrollable, false);
 
 		UnitAnim anim = attackIndex == 0 ? UnitAnim.Slash : UnitAnim.RisingSlash;
 		actor.PlayAnim(anim, 0, 0, 0,
@@ -270,7 +248,7 @@ public class Unit : MonoBehaviour{
 				StopSearchTarget();
 
 				//解除不可控制
-				SetFlag(UnitFlag.Controllable, true);
+				SetFlag(UnitFlag.Uncontrollable, true);
 			},
 			() => {
 				

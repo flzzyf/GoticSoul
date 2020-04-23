@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2fc81ccf4afb4f04f8260291a0ef34f5, type: 3}
-  m_Name: Uncontrollable
+  m_Name: Roll
   m_EditorClassIdentifier: 
-  name: "\u65E0\u6CD5\u63A7\u5236"
-  speedMultiplier: 1
+  name: "\u7FFB\u6EDA\u52A0\u901F"
+  speedMultiplier: 1.5
   maxStackCount: 1
   duration: -1
   owner: {fileID: 0}
@@ -23,4 +23,4 @@ MonoBehaviour:
   - flag: 1
     value: 1
   - flag: 2
-    value: 0
+    value: 1

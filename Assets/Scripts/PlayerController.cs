@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour{
 	public Unit unit;
 
 	void Update(){
-		if (!unit.HasFlag(UnitFlag.Controllable)){
+		if (unit.HasFlag(UnitFlag.Uncontrollable)){
 			return;
 		}
 
