@@ -9,11 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 264845643d395404f8f75eaf2f68d54e, type: 3}
-  m_Name: Roll_Order
+  m_Script: {fileID: 11500000, guid: 968df8db2dd8756438bff04ff3b2406f, type: 3}
+  m_Name: RB_Uncontrollable
   m_EditorClassIdentifier: 
   originUnit: {fileID: 0}
   casterUnit: {fileID: 0}
   targetUnit: {fileID: 0}
   targetPoint: {x: 0, y: 0}
-  abil: {fileID: 11400000, guid: 02aa3c6240bcebc4e94de251f9efa587, type: 2}
+  whichUnit: 0
+  number: -1
+  buff: {fileID: 11400000, guid: 821418d564b50524f9f1427dc72f9b92, type: 2}

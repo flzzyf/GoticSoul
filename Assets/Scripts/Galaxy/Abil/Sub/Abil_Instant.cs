@@ -9,6 +9,8 @@ public class Abil_Instant : Abil{
 	public override void Cast() {
 		base.Cast();
 
-		effect_Cast?.Trigger(caster, caster, caster.transform.position);
+		if(effect_Cast != null) {
+			EffectManager.GetEffectInstance(effect_Cast).Trigger(caster, caster, caster.transform.position);
+		}
 	}
 }

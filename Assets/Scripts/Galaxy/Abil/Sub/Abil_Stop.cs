@@ -2,17 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Abil_Stop : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+[CreateAssetMenu(menuName = "Abil/Stop")]
+public class Abil_Stop : Abil {
+	public override void Cast() {
+		base.Cast();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+		caster.StopMoving();
+	}
 }

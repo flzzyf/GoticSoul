@@ -19,6 +19,9 @@ public class Buff : ScriptableObject {
 	[HideInInspector]
 	public Unit owner;
 
+	//标旗修改
+	public Dictionary<UnitFlag, bool> flagDic;
+
 	public void OnAdd(Unit unit) {
 		unit.speed *= speedMultiplier;
 	}

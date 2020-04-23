@@ -94,8 +94,9 @@ public class Unit : MonoBehaviour{
 	IEnumerator MoveToTargetCor(float x) {
 		float offset = x - transform.position.x;
 
-		if (offset > speed * Time.fixedDeltaTime) {
-			Move((int)Mathf.Sign(offset));
+		if (Mathf.Abs(offset) > speed * Time.fixedDeltaTime) {
+			int dir = (int)Mathf.Sign(offset);
+			Move(dir);
 
 			while (Mathf.Abs(x - transform.position.x) >= speed * Time.fixedDeltaTime) {
 				yield return new WaitForFixedUpdate();

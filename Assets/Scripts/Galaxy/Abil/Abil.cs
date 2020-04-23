@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ScriptableObject/Abil")]
 public class Abil : ScriptableObject{
 	//技能的释放动画
 	public UnitAnim castAnim;

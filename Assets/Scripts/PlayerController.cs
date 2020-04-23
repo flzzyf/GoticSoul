@@ -53,8 +53,10 @@ public class PlayerController : MonoBehaviour{
 			}
 
 			if (input.rollButtonPressed) {
-				unit.Roll();
+				//unit.Roll();
 				//unit.WolfSword();
+
+				AbilManager.CastAbil(AbilManager.GetAbil("Roll"), unit);
 			}
 		}
 		finally {

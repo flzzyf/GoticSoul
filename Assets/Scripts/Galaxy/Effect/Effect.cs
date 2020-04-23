@@ -17,8 +17,11 @@ public class Effect : ScriptableObject{
 		if(originUnit == null) {
 			originUnit = casterUnit;
 		}
+		if (targetUnit == null) {
+			targetUnit = casterUnit;
+		}
 
-		if(targetPoint == default) {
+		if (targetPoint == default) {
 			targetPoint = casterUnit.pos;
 		}
 	}

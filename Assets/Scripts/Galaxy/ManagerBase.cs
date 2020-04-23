@@ -1,22 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
-using System.IO;
 
 public class ManagerBase<T> {
 	protected static Dictionary<string, object> dataDic;
 
-	public static void Init() {
+	public static void LoadData() {
 		dataDic = new Dictionary<string, object>();
 
-		//读取技能
-		var guids = AssetDatabase.FindAssets("", new[] { "Assets/Resources/ScriptableObjects/" + typeof(T) });
-		foreach (var item in guids) {
-			var path = AssetDatabase.GUIDToAssetPath(item);
-			string name = Path.GetFileNameWithoutExtension(path);
-			object data = Resources.Load(string.Format("ScriptableObjects/{0}/{1}", typeof(T), name));
-			dataDic.Add(name, data);
+		//读取
+		foreach (var item in Resources.LoadAll("ScriptableObjects/" + typeof(T))) {
+			dataDic.Add(item.name, item);
 		}
 	}
 

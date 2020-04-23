@@ -5,8 +5,8 @@ using System.Threading;
 using System;
 
 public class BuffManager : ManagerBase<Buff> {
-	public static void OnInit() {
-		Init();
+	public static void Init() {
+		LoadData();
 
 		periodicBuffList = new List<Buff>();
 		Thread update = new Thread(UpdateBuffDuration);
@@ -25,7 +25,6 @@ public class BuffManager : ManagerBase<Buff> {
 				Buff buff = periodicBuffList[i];
 				//扣除持续时间
 				buff.duration -= updatePeriod;
-				Debug.Log(buff.duration);
 
 				//超时则移除该Buff
 				if (buff.duration <= 0) {
@@ -46,14 +45,13 @@ public class BuffManager : ManagerBase<Buff> {
 		unit.buffList.Add(instance);
 
 		//if (buff.maxStackCount > 1) {
-		//	if(HasBuff(unit, buff)) {
+		//	if (HasBuff(unit, buff)) {
 
 		//	}
-		//	unit.buffList.Add(buff);
 		//}
 
 		//Buff有持续时间
-		if(instance.duration != -1) {
+		if (instance.duration != -1) {
 			periodicBuffList.Add(instance);
 		}
 
@@ -61,9 +59,8 @@ public class BuffManager : ManagerBase<Buff> {
 	}
 
 	public static void RemoveBuff(Unit unit, Buff buff) {
-		Debug.Log("移除");
 		for (int i = 0; i < unit.buffList.Count; i++) {
-			Buff bf = periodicBuffList[i];
+			Buff bf = unit.buffList[i];
 			if (bf.name == buff.name) {
 				unit.buffList.RemoveAt(i);
 				break;

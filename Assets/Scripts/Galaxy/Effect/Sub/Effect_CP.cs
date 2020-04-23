@@ -1,21 +1,69 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading;
 
 [CreateAssetMenu(menuName = "Effect/CP")]
 public class Effect_CP : Effect {
-	public Effect effect_Init;
+	[Header("初始效果")]
+	//初始效果
+	public Effect initEffect;
+	//初始偏移
+	public Offset initOffset;
 
-	//偏移
-	public Offset offset;
+	[Header("周期效果")]
+	//周期次数
+	public int periodCount;
+	//周期时长
+	public float periodicDuration;
+	//周期效果
+	public Effect periodicEffect;
+	//周期偏移
+
+	[Header("结束效果")]
+	//结束效果
+	public Effect finalEffect;
+
+	//默认更新周期
+	const float updatePeriod = 0.0625f;
 
 	public override void Trigger() {
 		base.Trigger();
 
-		offset.Init(this);
-		Vector2 pos = offset.targetPos;
-		Debug.Log("目标位置" + pos);
-		EffectManager.GetEffectInstance(effect_Init).Trigger(casterUnit, pos);
+		if(initEffect != null) {
+			initOffset.Init(this);
+			Vector2 pos = initOffset.targetPos;
+			EffectManager.GetEffectInstance(initEffect).Trigger(casterUnit, pos);
+		}
+
+		//开始周期效果
+		if (periodCount > 0 && periodicEffect != null) {
+			GameManager.instnace.StartCoroutine(TriggerPeriodicEffect());
+		}
+		else {
+			//没有周期效果就直接执行最终效果
+			if(finalEffect != null) {
+				EffectManager.GetEffectInstance(finalEffect).Trigger(casterUnit);
+			}
+		}
+	}
+
+	//执行周期效果
+	IEnumerator TriggerPeriodicEffect() {
+		float period = periodicDuration > 0 ? periodicDuration : updatePeriod;
+
+		for (int i = 0; i < periodCount; i++) {
+			initOffset.Init(this);
+			Vector2 pos = initOffset.targetPos;
+			EffectManager.GetEffectInstance(periodicEffect).Trigger(casterUnit, targetUnit, pos);
+
+			yield return new WaitForSeconds(period);
+		}
+
+		//执行最终效果
+		if (finalEffect != null) {
+			EffectManager.GetEffectInstance(finalEffect).Trigger(casterUnit);
+		}
 	}
 }
 
@@ -36,7 +84,6 @@ public class Offset {
 	//偏移的目标点
 	public Vector2 targetPos {
 		get {
-		Debug.Log("方向" + dir);
 			return GetTargetPoint(offsetStartPos) + dir * offsetX;
 		}
 	}

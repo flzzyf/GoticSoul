@@ -7,10 +7,14 @@ public class GameManager : MonoBehaviour{
 
 	public Effect effect;
 
+	public static GameManager instnace;
+
 	private void Awake() {
+		instnace = this;
+
 		//初始化各个系统
 		AbilManager.Init();
-		BuffManager.OnInit();
+		BuffManager.Init();
 	}
 
 	private void Update() {
@@ -22,5 +26,13 @@ public class GameManager : MonoBehaviour{
 
 			EffectManager.GetEffectInstance(effect).Trigger(player);
 		}
+	}
+
+	public void ReloadScene() {
+		UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+	}
+
+	IEnumerator qwe() {
+		yield return new WaitForSeconds(1);
 	}
 }

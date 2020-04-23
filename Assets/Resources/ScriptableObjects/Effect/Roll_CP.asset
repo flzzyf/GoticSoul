@@ -16,8 +16,12 @@ MonoBehaviour:
   casterUnit: {fileID: 0}
   targetUnit: {fileID: 0}
   targetPoint: {x: 0, y: 0}
-  effect_Init: {fileID: 11400000, guid: 671a64c7a87dc694bad1e2b94aece39b, type: 2}
-  offset:
+  initEffect: {fileID: 11400000, guid: d0c7050374d64ae4a9b49aad45cdd5ae, type: 2}
+  initOffset:
     offsetStartPos: 5
-    offsetEndPos: 0
-    offsetX: 1
+    offsetEndPos: 5
+    offsetX: 12
+  periodCount: 5
+  periodicDuration: 0.1
+  periodicEffect: {fileID: 11400000, guid: 671a64c7a87dc694bad1e2b94aece39b, type: 2}
+  finalEffect: {fileID: 11400000, guid: c4205a3cd21101c408fa78c95357724b, type: 2}
