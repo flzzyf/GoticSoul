@@ -55,6 +55,8 @@ public class Effect : ScriptableObject{
 
 	#endregion
 
-
+	public override string ToString() {
+		return string.Format("Origin: {0}, Target: {1}, TargetPoint:{2}", originUnit.name, targetUnit.name, targetPoint);
+	}
 
 }

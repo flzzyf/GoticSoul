@@ -72,6 +72,17 @@ PrefabInstance:
       propertyPath: player
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5179432569548951560, guid: 1de6bbc9e11aa9d42bce0360ed353556,
+        type: 3}
+      propertyPath: weaponPrefab
+      value: 
+      objectReference: {fileID: 3767713865686683012, guid: daf3c43ff4be4a042929aa2422168565,
+        type: 3}
+    - target: {fileID: 5179432569548951560, guid: 1de6bbc9e11aa9d42bce0360ed353556,
+        type: 3}
+      propertyPath: attribute_HP.max
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 5179432569209585320, guid: 1de6bbc9e11aa9d42bce0360ed353556,
         type: 3}
       propertyPath: m_Color.r

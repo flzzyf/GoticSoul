@@ -4,7 +4,11 @@ using UnityEngine;
 using System.Threading;
 using System;
 
-public class BuffManager : ManagerBase<Buff> {
+public class BuffManager : ScriptableObjectManagerBase<Buff> {
+	const float updatePeriod = 0.0625f;
+
+	static List<Buff> periodicBuffList;
+
 	public static void Init() {
 		LoadData();
 
@@ -12,10 +16,6 @@ public class BuffManager : ManagerBase<Buff> {
 		Thread update = new Thread(UpdateBuffDuration);
 		update.Start();
 	}
-
-	const float updatePeriod = 0.0625f;
-
-	static List<Buff> periodicBuffList;
 
 	static void UpdateBuffDuration(object obj) {
 		while (true) {

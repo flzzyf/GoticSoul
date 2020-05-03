@@ -78,5 +78,20 @@ PrefabInstance:
       propertyPath: player
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5179432569548951560, guid: 1de6bbc9e11aa9d42bce0360ed353556,
+        type: 3}
+      propertyPath: attribute_HP.max
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 5179432569548951560, guid: 1de6bbc9e11aa9d42bce0360ed353556,
+        type: 3}
+      propertyPath: attribute_Stamina.max
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5179432569548951560, guid: 1de6bbc9e11aa9d42bce0360ed353556,
+        type: 3}
+      propertyPath: attribute_Stamina.regenRate
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1de6bbc9e11aa9d42bce0360ed353556, type: 3}

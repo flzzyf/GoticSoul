@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Roll
   m_EditorClassIdentifier: 
   name: "\u7FFB\u6EDA\u52A0\u901F"
-  speedMultiplier: 1.5
+  speedMultiplier: 1.7
   maxStackCount: 1
   duration: -1
   owner: {fileID: 0}

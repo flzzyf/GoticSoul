@@ -10,6 +10,18 @@ public class Effect_Order : Effect {
 	public override void Trigger() {
 		base.Trigger();
 
-		abil.Cast(casterUnit, targetPoint);
+
+		if(abil.GetType() == typeof(Abil_Instant)) {
+			abil.Cast(casterUnit);
+		}
+		else if (abil.GetType() == typeof(Abil_Stop)) {
+			abil.Cast(casterUnit);
+		}
+		else if (abil.GetType() == typeof(Abil_Target)) {
+			(abil as Abil_Target).Cast(casterUnit, targetPoint);
+		}
+		else if(abil.GetType() == typeof(Abil_Move)) {
+			(abil as Abil_Move).Cast(casterUnit, targetPoint);
+		}
 	}
 }

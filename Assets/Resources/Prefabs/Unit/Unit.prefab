@@ -47,7 +47,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6d1d45db7f6a1f4b94aeba11837fcb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapon: {fileID: 0}
 --- !u!95 &621239192476107146
 Animator:
   serializedVersion: 3
@@ -145,13 +144,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actor: {fileID: 6103301734593265452}
   abilList: []
+  buffList: []
   player: 0
+  initSpeed: 7
   speed: 7
-  hpMax: 1
-  attackPreswing: 0.2
-  attackReswing: 0.3
-  weaponPrefab: {fileID: 0}
-  weaponParent: {fileID: 2006807575627360546}
+  moving: 0
+  attribute_HP:
+    max: 1
+    regenRate: 0
+  attribute_Stamina:
+    max: 1
+    regenRate: 0
+  weapon: {fileID: 0}
+  weaponName: 
 --- !u!61 &8266106199554071320
 BoxCollider2D:
   m_ObjectHideFlags: 0

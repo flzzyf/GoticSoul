@@ -19,6 +19,7 @@ public class Effect_CP : Effect {
 	//周期效果
 	public Effect periodicEffect;
 	//周期偏移
+	public Offset periodicOffset;
 
 	[Header("结束效果")]
 	//结束效果
@@ -37,8 +38,8 @@ public class Effect_CP : Effect {
 		}
 
 		//开始周期效果
-		if (periodCount > 0 && periodicEffect != null) {
-			GameManager.instnace.StartCoroutine(TriggerPeriodicEffect());
+		if (periodCount > 0) {
+			GameManager.instance.StartCoroutine(TriggerPeriodicEffect());
 		}
 		else {
 			//没有周期效果就直接执行最终效果
@@ -53,9 +54,12 @@ public class Effect_CP : Effect {
 		float period = periodicDuration > 0 ? periodicDuration : updatePeriod;
 
 		for (int i = 0; i < periodCount; i++) {
-			initOffset.Init(this);
-			Vector2 pos = initOffset.targetPos;
-			EffectManager.GetEffectInstance(periodicEffect).Trigger(casterUnit, targetUnit, pos);
+			//如果有周期效果，执行
+			if(periodicEffect != null) {
+				periodicOffset.Init(this);
+				Vector2 pos = periodicOffset.targetPos;
+				EffectManager.GetEffectInstance(periodicEffect).Trigger(casterUnit, targetUnit, pos);
+			}
 
 			yield return new WaitForSeconds(period);
 		}

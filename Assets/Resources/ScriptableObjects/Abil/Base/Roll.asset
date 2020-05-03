@@ -9,11 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e7449458671ccb40b33d9b910eef72a, type: 3}
+  m_Script: {fileID: 11500000, guid: db0354f21fa967b4ba2784f197ac989b, type: 3}
   m_Name: Roll
   m_EditorClassIdentifier: 
   castAnim: 5
   preswingDuration: 0
   swingDuration: 0.5
   backswingDuration: 0
+  cost:
+    staminaCost: 15
   effect_Cast: {fileID: 11400000, guid: 97b1863ec95e8d04fa552427e711ed25, type: 2}

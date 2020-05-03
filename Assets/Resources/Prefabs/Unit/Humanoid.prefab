@@ -70,19 +70,25 @@ PrefabInstance:
     - target: {fileID: 3175508078334900570, guid: f42c8e7460ed49341bfcf01dbc6f51f8,
         type: 3}
       propertyPath: abilList.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3175508078334900570, guid: f42c8e7460ed49341bfcf01dbc6f51f8,
         type: 3}
       propertyPath: abilList.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 57d50e17e981ead4396c9a00b372a318,
+      objectReference: {fileID: 11400000, guid: 4663af05e7f050f48b8ae7cf1df80321,
         type: 2}
     - target: {fileID: 3175508078334900570, guid: f42c8e7460ed49341bfcf01dbc6f51f8,
         type: 3}
       propertyPath: abilList.Array.data[1]
       value: 
       objectReference: {fileID: 11400000, guid: 02aa3c6240bcebc4e94de251f9efa587,
+        type: 2}
+    - target: {fileID: 3175508078334900570, guid: f42c8e7460ed49341bfcf01dbc6f51f8,
+        type: 3}
+      propertyPath: abilList.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: b70506165bc2b034c85a6265f97ae278,
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f42c8e7460ed49341bfcf01dbc6f51f8, type: 3}

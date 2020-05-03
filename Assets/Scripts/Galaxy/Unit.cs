@@ -41,11 +41,17 @@ public class Unit : MonoBehaviour{
 			InitFlag();
 			InitWeapon();
 			InitMoving();
+			InitAttribute();
 		}
 		finally {
 			//最后初始化演算体
 			actor.Init();
 		}
+	}
+
+	private void Update() {
+		//更新属性
+		UpdateAttribute();
 	}
 
 	#region 移动
@@ -75,9 +81,9 @@ public class Unit : MonoBehaviour{
 		moving = true;
 
 		//面向移动方向
-		if (faceTargetDir) {
-			Face(dir);
-		}
+		//if (faceTargetDir) {
+		//	Face(dir);
+		//}
 	}
 
 	public void StopMoving() {
@@ -104,48 +110,6 @@ public class Unit : MonoBehaviour{
 			}
 
 			StopMoving();
-		}
-	}
-
-	#endregion
-
-	#region 狼剑术
-
-	public void WolfSword() {
-		//设为不可控制
-		SetFlag(UnitFlag.Uncontrollable, false);
-
-		StartCoroutine(WolfSwordCor());
-
-		actor.PlayAnim(UnitAnim.WolfSword, -1, -1, -1, 
-			() => {
-				//搜索目标
-				SetWeaponSearchCallback(unit => {
-					Debug.Log("Hit:" + unit.name);
-
-					unit.actor.PlayAnim(UnitAnim.TakeDown);
-				});
-			}, 
-			() => {
-				StopSearchTarget();
-			},
-			() => {
-				//解除不可控制
-				SetFlag(UnitFlag.Uncontrollable, true);
-			});
-	}
-
-	IEnumerator WolfSwordCor() {
-		float rollDuration = 1.15f;
-		float rollDistance = 7f;
-		float rollSpeed = rollDistance / rollDuration;
-
-		yield return new WaitForSeconds(0.13f);
-
-		for (float i = 0; i < rollDuration; i += Time.fixedDeltaTime) {
-			rb.movingForce = Vector2.right * facing * rollSpeed;
-
-			yield return new WaitForFixedUpdate();
 		}
 	}
 
@@ -190,6 +154,12 @@ public class Unit : MonoBehaviour{
 		int modiify = value ? 1 : -1;
 
 		flagValueDic[flag] += modiify;
+
+		//该单位是玩家，且刚恢复控制
+		if(GameManager.Player == this && flag == UnitFlag.Uncontrollable && !HasFlag(UnitFlag.Uncontrollable)) {
+			//触发回调
+			PlayerController.OnBecomeControllable();
+		}
 	}
 
 	//具有标旗
@@ -199,99 +169,127 @@ public class Unit : MonoBehaviour{
 
 	#endregion
 
-	#region 生命
+	#region 单位属性
 
-	public int hpMax = 1;
-	int hp;
+	[Header("单位属性")]
+	public UnitAttribute attribute_HP;
+	public UnitAttribute attribute_Stamina;
 
-	public void ModifyHp(int value) {
-		hp += value;
+	void InitAttribute() {
+		attribute_HP.Init();
+		attribute_Stamina.Init();
 
-		if(hp <= 0) {
+		attribute_HP.onReach0 += () => {
 			Die();
+		};
+	}
+
+	void UpdateAttribute() {
+		attribute_HP.Update();
+		attribute_Stamina.Update();
+	}
+
+	//修改属性值
+	public void ModifyAttribute(UnitAttributeType type, float modifyValue) {
+		if (type == UnitAttributeType.Hp) {
+			attribute_HP.ModifyValue(modifyValue);
+		}
+		else if (type == UnitAttributeType.Stamina) {
+			attribute_Stamina.ModifyValue(modifyValue);
 		}
 	}
 
+	#region 生命
+
+	//死掉
 	public void Die() {
 		gameObject.SetActive(false);
 	}
 
 	#endregion
 
-	#region 攻击
-
-	//攻击前摇
-	public float attackPreswing = .2f;
-	//攻击后摇
-	public float attackReswing = .3f;
-
-	int attackIndex;
-
-	public void Attack() {
-		StopMoving();
-
-		//设为不可控制
-		SetFlag(UnitFlag.Uncontrollable, false);
-
-		UnitAnim anim = attackIndex == 0 ? UnitAnim.Slash : UnitAnim.RisingSlash;
-		actor.PlayAnim(anim, 0, 0, 0,
-			() => {
-				//搜索目标
-				SetWeaponSearchCallback(unit => {
-					Debug.Log("Hit:" + unit.name);
-
-					HitTarget(unit);
-				});
-			},
-			() => {
-				//结束搜索目标
-				StopSearchTarget();
-
-				//解除不可控制
-				SetFlag(UnitFlag.Uncontrollable, true);
-			},
-			() => {
-				
-			});
-
-		if (attackIndex == 0)
-			attackIndex++;
-		else
-			attackIndex = 0;
-	}
-
-	void SetWeaponSearchCallback(Action<Unit> callback) {
-		weapon.SearchTargetStart(callback);
-	}
-
-	void StopSearchTarget() {
-		weapon.SearchTargetEnd();
-	}
-
-	void HitTarget(Unit unit) {
-		unit.actor.PlayAnim(UnitAnim.Hit);
-	}
-
 	#endregion
 
 	#region 单位武器
 
-	//初始武器预制体
-	public Weapon weaponPrefab;
-	//当前使用武器
-	Weapon weapon;
+	//武器
+	public Weapon weapon;
 
-	//武器父级物体
-	public Transform weaponParent;
+	//初始武器
+	public string weaponName;
 
 	void InitWeapon() {
 		//有初始武器就生成
-		if(weaponPrefab != null) {
-			weapon = Instantiate(weaponPrefab, weaponParent);
+		if(weaponName != default) {
+			weapon.Init(WeaponManager.GetWeapon(weaponName));
 		}
+	}
+
+	//使用武器
+	public void UseWeapon() {
+		weapon.UseWeapon(this);
+	}
+
+	//装备武器
+	public void EquipWeapon(WeaponData weaponData) {
+		weapon.Init(weaponData);
 	}
 
 	#endregion
 
+}
+
+public enum UnitAttributeType {
+	Hp,
+	Stamina,
+	Mana,
+}
+
+//单位属性
+[System.Serializable]
+public class UnitAttribute {
+	//初始上限
+	public float max = 1;
+	//当前上限
+	[NonSerialized]
+	public float currentMax;
+	//当前值
+	[NonSerialized]
+	public float currentValue;
+
+	public float currentPercent { get { return currentValue / currentMax; } }
+
+	//每秒恢复率
+	public float regenRate;
+
+	public void Init() {
+		currentMax = max;
+		currentValue = max;
+	}
+
+	//修改值
+	public void ModifyValue(float modifyValue) {
+		currentValue += modifyValue;
+
+		onModifyValue?.Invoke();
+
+		//触发归零回调
+		if(onReach0 != null && currentValue <= 0) {
+			onReach0.Invoke();
+		}
+	}
+
+	//当降为0的回调
+	[NonSerialized]
+	public Action onReach0;
+
+	[NonSerialized]
+	public Action onModifyValue;
+
+	public void Update() {
+		if(regenRate > 0) {
+			ModifyValue(regenRate * Time.deltaTime);
+		}
+	}
 }
 

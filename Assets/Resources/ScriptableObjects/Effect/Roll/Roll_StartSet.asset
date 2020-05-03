@@ -18,3 +18,4 @@ MonoBehaviour:
   targetPoint: {x: 0, y: 0}
   effectList:
   - {fileID: 11400000, guid: d966877b59c2b354c99a31434b62a454, type: 2}
+  - {fileID: 11400000, guid: 671a64c7a87dc694bad1e2b94aece39b, type: 2}
