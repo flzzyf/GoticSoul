@@ -35,7 +35,9 @@ public class Unit : MonoBehaviour{
 
 	private void Awake() {
 		rb = GetComponent<RigidbodyBox>();
+	}
 
+	private void Start() {
 		try {
 			//初始化各个组件
 			InitFlag();
@@ -213,26 +215,37 @@ public class Unit : MonoBehaviour{
 	#region 单位武器
 
 	//武器
-	public Weapon weapon;
+	Weapon weapon;
+
+	//武器父级
+	public Transform weaponParent;
 
 	//初始武器
 	public string weaponName;
 
 	void InitWeapon() {
 		//有初始武器就生成
-		if(weaponName != default) {
-			weapon.Init(WeaponManager.GetWeapon(weaponName));
+		if(weaponName != "") {
+			WeaponManager.EquipWeapon(this, weaponName);
 		}
 	}
 
 	//使用武器
 	public void UseWeapon() {
+		if (weapon == null)
+			return;
+
 		weapon.UseWeapon(this);
 	}
 
 	//装备武器
-	public void EquipWeapon(WeaponData weaponData) {
-		weapon.Init(weaponData);
+	public void EquipWeapon(Weapon weapon) {
+		this.weapon = weapon;
+
+		//附着武器到武器位置
+		weapon.transform.SetParent(weaponParent);
+		weapon.transform.localPosition = Vector3.zero;
+		weapon.transform.localRotation = Quaternion.identity;
 	}
 
 	#endregion

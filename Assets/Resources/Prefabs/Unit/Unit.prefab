@@ -155,7 +155,7 @@ MonoBehaviour:
   attribute_Stamina:
     max: 1
     regenRate: 0
-  weapon: {fileID: 0}
+  weaponParent: {fileID: 2006807575627360546}
   weaponName: 
 --- !u!61 &8266106199554071320
 BoxCollider2D:

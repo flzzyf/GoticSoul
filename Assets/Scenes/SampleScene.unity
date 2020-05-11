@@ -1515,6 +1515,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3154304259324995958, guid: 77d04bb6f42233a4a8929471fb0f9ff6,
+        type: 3}
+      propertyPath: weaponName
+      value: Greatsword
+      objectReference: {fileID: 0}
     - target: {fileID: 3154304259324995944, guid: 77d04bb6f42233a4a8929471fb0f9ff6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6842,6 +6847,7 @@ GameObject:
   - component: {fileID: 2076955683}
   - component: {fileID: 2076955685}
   - component: {fileID: 2076955686}
+  - component: {fileID: 2076955687}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -6905,6 +6911,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 906800832}
+--- !u!114 &2076955687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2076955682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df922789a5d711344a32337ed6abca83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponPrefab: {fileID: 3664953232992940861, guid: a71e1a7caef6f98479529980c10ba4ed,
+    type: 3}
 --- !u!1001 &4923941174086005589
 PrefabInstance:
   m_ObjectHideFlags: 0

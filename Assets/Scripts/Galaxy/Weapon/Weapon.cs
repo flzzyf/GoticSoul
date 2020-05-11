@@ -25,13 +25,16 @@ public class Weapon : MonoBehaviour{
 		this.data = data;
 
 		//读取外观
-		GameObject weaponLook = Resources.Load("Prefabs/Weapon" + data.Look) as GameObject;
+		GameObject weaponLook = Resources.Load("Prefabs/WeaponLook/" + data.Look) as GameObject;
 		Instantiate(weaponLook, transform);
 	}
 
 	//使用武器
 	public void UseWeapon(Unit caster, Vector2 targetPoint = default) {
 		holder = caster;
+
+		//停止移动
+		caster.StopMoving();
 
 		//设为不可控制
 		caster.SetFlag(UnitFlag.Uncontrollable, true);
@@ -41,7 +44,7 @@ public class Weapon : MonoBehaviour{
 					//搜索目标
 					SearchTargetStart(unit => {
 						HitTarget(unit);
-					});
+					}); 
 				},
 				() => {
 					//结束搜索目标
@@ -75,6 +78,7 @@ public class Weapon : MonoBehaviour{
 		//对接触该碰撞体的单位施加效果
 		for (int i = colliderList.Count - 1; i >= 0; i--) {
 			Unit unit = colliderList[i];
+			Debug.Log(unit.name);
 			if (RelationshipManager.RelationshipBetween(holder, unit) == Relationship.Enemy) {
 				currentTargetList.Add(unit);
 
